@@ -21,6 +21,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Pp]roperties/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -50,6 +51,8 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
+*.sln
+*.csproj
 *.obj
 *.pch
 *.pdb
