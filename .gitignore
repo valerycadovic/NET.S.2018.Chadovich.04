@@ -53,6 +53,7 @@ artifacts/
 *.meta
 *.sln
 *.csproj
+*.config
 *.obj
 *.pch
 *.pdb
