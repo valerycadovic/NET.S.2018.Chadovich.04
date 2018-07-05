@@ -1,5 +1,6 @@
 ﻿namespace Day4
 {
+    using System.Runtime.InteropServices;
     using System.Text;
 
     /// <summary>
@@ -7,6 +8,30 @@
     /// </summary>
     public static class DoubleHelper
     {
+        #region Constants
+        /// <summary>
+        /// Count of bits in byte
+        /// </summary>
+        private const int BYTESIZE = 8;
+
+        /// <summary>
+        /// Count of bytes in double and long
+        /// </summary>
+        private const int LONGDOUBLEBITS = 8 * BYTESIZE;
+        #endregion
+
+        #region Public API
+        /// <summary>
+        /// Represents binary form of System.Double as a string using unsafe code
+        /// </summary>
+        /// <param name="value">number to be represented</param>
+        /// <returns>string which contains binary form of a number</returns>
+        public static string BinaryUnsafe(this double value)
+        {
+            long bits = DoubleToLong(value);
+            return bits.Binary();
+        }
+
         /// <summary>
         /// Represents binary form of System.Double as a string
         /// </summary>
@@ -14,10 +39,14 @@
         /// <returns>string which contains binary form of a number</returns>
         public static string Binary(this double value)
         {
-            long bits = DoubleToLong(value);
+            Union union = new Union(value);
+            long bits = (long)union;
+
             return bits.Binary();
         }
+        #endregion
 
+        #region Private Section
         /// <summary>
         /// Reinterpret cast of double to long
         /// </summary>
@@ -38,7 +67,7 @@
         {
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < LONGDOUBLEBITS; i++)
             {
                 if ((value & 1) == 1)
                 {
@@ -54,5 +83,40 @@
 
             return sb.ToString();
         }
+        
+        /// <summary>
+        /// long representation of double value
+        /// </summary>
+        [StructLayout(LayoutKind.Explicit)]
+        private struct Union
+        {
+            /// <summary>
+            /// double representation
+            /// </summary>
+            [FieldOffset(0)]
+            private readonly double @double;
+
+            /// <summary>
+            /// long representation
+            /// </summary>
+            [FieldOffset(0)]
+            private readonly long @long;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Union"/> struct
+            /// </summary>
+            /// <param name="value">double value to be converted</param>
+            public Union(double value) : this()
+            {
+                @double = value;
+            }
+
+            /// <summary>
+            /// Casts to long
+            /// </summary>
+            /// <param name="obj">value to be casted</param>
+            public static explicit operator long(Union obj) => obj.@long;
+        }
+        #endregion
     }
 }
