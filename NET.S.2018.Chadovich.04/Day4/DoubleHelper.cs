@@ -40,7 +40,7 @@
         public static string Binary(this double value)
         {
             Union union = new Union(value);
-            long bits = (long)union;
+            long bits = union.ToLong();
 
             return bits.Binary();
         }
@@ -116,6 +116,12 @@
             /// </summary>
             /// <param name="obj">value to be casted</param>
             public static explicit operator long(Union obj) => obj.@long;
+
+            /// <summary>
+            /// Casts to long
+            /// </summary>
+            /// <returns>long value representation</returns>
+            public long ToLong() => @long;
         }
         #endregion
     }
