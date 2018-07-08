@@ -22,17 +22,6 @@
 
         #region Public API
         /// <summary>
-        /// Represents binary form of System.Double as a string using unsafe code
-        /// </summary>
-        /// <param name="value">number to be represented</param>
-        /// <returns>string which contains binary form of a number</returns>
-        public static string BinaryUnsafe(this double value)
-        {
-            long bits = DoubleToLong(value);
-            return bits.Binary();
-        }
-
-        /// <summary>
         /// Represents binary form of System.Double as a string
         /// </summary>
         /// <param name="value">number to be represented</param>
@@ -47,17 +36,6 @@
         #endregion
 
         #region Private Section
-        /// <summary>
-        /// Reinterpret cast of double to long
-        /// </summary>
-        /// <param name="value">number to be casted</param>
-        /// <returns>binary form of System.Double value as long integer</returns>
-        private static unsafe long DoubleToLong(double value)
-        {
-            void* mem = (void*)&value;
-            return *(long*)mem;
-        }
-
         /// <summary>
         /// Represents binary form of long integer number as a string
         /// </summary>
@@ -83,7 +61,7 @@
 
             return sb.ToString();
         }
-        
+
         /// <summary>
         /// long representation of double value
         /// </summary>
@@ -110,7 +88,7 @@
             {
                 @double = value;
             }
-
+        
             /// <summary>
             /// Casts to long
             /// </summary>
