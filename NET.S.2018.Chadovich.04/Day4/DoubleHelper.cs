@@ -43,7 +43,7 @@
         /// <returns>string which contains binary form of a number</returns>
         private static string Binary(this long value)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(LONGDOUBLEBITS);
 
             for (int i = 0; i < LONGDOUBLEBITS; i++)
             {
